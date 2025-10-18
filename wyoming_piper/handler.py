@@ -8,6 +8,7 @@ import tempfile
 import wave
 from typing import Any, Dict, Optional
 
+from markdown import markdown
 from piper import PiperVoice, SynthesisConfig
 from sentence_stream import SentenceBoundaryDetector
 from wyoming.audio import AudioChunk, AudioStart, AudioStop
@@ -146,9 +147,9 @@ class PiperEventHandler(AsyncEventHandler):
         raw_text = synthesize.text
 
         # Join multiple lines
-        text = " ".join(raw_text.strip().splitlines())
+        text = markdown(raw_text)
 
-        if self.cli_args.auto_punctuation and text:
+        if self.cli_args.auto_punctuation and text and False:
             # Add automatic punctuation (important for some voices)
             has_punctuation = False
             for punc_char in self.cli_args.auto_punctuation:
